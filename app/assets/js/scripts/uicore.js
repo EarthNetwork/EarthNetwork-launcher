@@ -50,7 +50,7 @@ if(!isDev){
                 loggerAutoUpdaterSuccess.log('Nouvelle version disponible', info.version)
                 
                 if(process.platform === 'darwin'){
-                    info.darwindownload = `https://github.com/radeonnetwork/radeon-launcher/releases/download/v${info.version}/radeon-launcher-${info.version}.dmg`
+                    info.darwindownload = `https://github.com/GeekCornerGH/RTMC-launcher/releases/download/v${info.version}/RTMC-launcher-${info.version}.dmg`
                     showUpdateUI(info)
                 }
                 

@@ -1,13 +1,13 @@
 {
-  "name": "radeonlauncher",
+  "name": "rtmc-launcher",
   "version": "1.8.7-release",
-  "productName": "Launcher radeon",
-  "description": "Launcher pour radeon",
+  "productName": "Launcher RTMC",
+  "description": "Launcher pour RTMC",
   "author": "Daniel Scalzi (https://github.com/dscalzi/) et GeekCorner (https://geekcorner.page.link/yt)",
   "license": "UNLICENSED",
   "homepage": "https://ytgeek.gq",
   "bugs": {
-    "url": "https://github.com/radeonnetwork/radeon-launcher/issues"
+    "url": "https://github.com/geekcornergh/rtmc-launcher/issues"
   },
   "private": true,
   "main": "index.js",
@@ -48,6 +48,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/radeonnetwork/radeon-launcher.git"
+    "url": "git+https://github.com/geekcornergh/rtmc-launcher.git"
   }
 }

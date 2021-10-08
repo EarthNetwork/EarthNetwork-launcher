@@ -19,7 +19,7 @@ builder.build({
     targets: (process.argv[2] != null && Platform[process.argv[2]] != null ? Platform[process.argv[2]] : getCurrentPlatform()).createTarget(),
     config: {
         appId: '',
-        productName: 'radeon Launcher',
+        productName: 'RTMC Launcher',
         artifactName: '${productName}-setup-${version}.${ext}',
         copyright: 'Copyright © 2018-2020 Daniel Scalzi et GeekCorner',
         directories: {
@@ -48,8 +48,8 @@ builder.build({
             target: 'AppImage',
             maintainer: 'GeekCorner',
             vendor: 'GeekCorner',
-            synopsis: 'Launcher pour radeon',
-            description: 'Launcher pour radeon permettant de rejoindre les différents modes de jeux..',
+            synopsis: 'Launcher pour RTMC',
+            description: 'Launcher pour RTMC permettant de rejoindre les différents modes de jeux..',
             category: 'Game',
             artifactName: '${productName}-linux-${version}.${ext}'
         },
