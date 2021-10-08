@@ -151,8 +151,8 @@ function updateSelectedAccount(authUser) {
         if (authUser.displayName != null) {
             username = authUser.displayName
         }
-        if (authUser.uuid != null) {
-            document.getElementById('avatarContainer').style.backgroundImage = `url('https://crafatar.com/renders/body/${authUser.uuid}?scale=3&default=MHF_Steve&overlay')`
+        if(authUser.uuid != null){
+            document.getElementById('avatarContainer').style.backgroundImage = `url('https://mc-heads.net/body/${authUser.uuid}/right')`
         }
     }
     user_text.innerHTML = username
@@ -202,12 +202,7 @@ const refreshMojangStatuses = async function () {
         for (let i = 0; i < statuses.length; i++) {
             const service = statuses[i]
 
-            // Mojang API is broken for sessionserver. https://bugs.mojang.com/browse/WEB-2303
-            /*if (service.service === 'sessionserver.mojang.com') {
-                service.status = 'green'
-            }*/
-
-            if (service.essential) {
+            if(service.essential){
                 tooltipEssentialHTML += `<div class="mojangStatusContainer">
                     <span class="mojangStatusIcon" style="color: ${Mojang.statusToHex(service.status)};">&#8226;</span>
                     <span class="mojangStatusName">${service.name}</span>

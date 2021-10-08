@@ -49,7 +49,7 @@ Téléchargez le launcher depuis l'onglet [Releases](https://github.com/GeekCorn
 | Platform | File |
 | -------- | ---- |
 | Windows x64 | `RTMC-launcher-setup-VERSION.exe` |
-| macOS | `RTMC-launcher-setup-VERSION.dmg` |
+| macOS | `RTMC-launcher-setup-VERSION-ACHITECTURE.dmg` |
 | Linux x64 | `RTMC-launcher-linux-VERSION.AppImage` |
 
 ---

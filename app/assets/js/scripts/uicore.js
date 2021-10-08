@@ -5,10 +5,11 @@
  * modules, excluding dependencies.
  */
 // Requirements
-const $                                      = require('jquery')
-const {ipcRenderer, remote, shell, webFrame} = require('electron')
-const isDev                                  = require('./assets/js/isdev')
-const LoggerUtil                             = require('./assets/js/loggerutil')
+const $                              = require('jquery')
+const {ipcRenderer, shell, webFrame} = require('electron')
+const remote                         = require('@electron/remote')
+const isDev                          = require('./assets/js/isdev')
+const LoggerUtil                     = require('./assets/js/loggerutil')
 
 const loggerUICore             = LoggerUtil('%c[UICore]', 'color: #000668; font-weight: bold')
 const loggerAutoUpdater        = LoggerUtil('%c[AutoUpdater]', 'color: #000668; font-weight: bold')
@@ -50,7 +51,7 @@ if(!isDev){
                 loggerAutoUpdaterSuccess.log('Nouvelle version disponible', info.version)
                 
                 if(process.platform === 'darwin'){
-                    info.darwindownload = `https://github.com/GeekCornerGH/RTMC-launcher/releases/download/v${info.version}/RTMC-launcher-${info.version}.dmg`
+                    info.darwindownload = `https://github.com/GeekCornerGH/RTMC-launcher/releases/download/v${info.version}/RTMC-launcher-${info.version}${process.arch === 'arm64' ? 'arm64' : ''}.dmg`
                     showUpdateUI(info)
                 }
                 
