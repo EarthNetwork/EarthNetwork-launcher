@@ -2,7 +2,7 @@
 const request = require('request')
 
 // Constants
-const clientId = '3530b541-1564-4c3d-bb2f-407c1b0e0e5d'
+const clientId = '7c4b0e47-d80a-4d85-a258-d4800c872b25'
 const tokenUri = 'https://login.microsoftonline.com/consumers/oauth2/v2.0/token'
 const authXBLUri = 'https://user.auth.xboxlive.com/user/authenticate'
 const authXSTSUri = 'https://xsts.auth.xboxlive.com/xsts/authorize'
@@ -182,7 +182,7 @@ exports.authMinecraft = async accessToken => {
 
         return MCToken
     } catch (error) {
-        Promise.reject(error)
+        await Promise.reject(error)
     }
 }
 

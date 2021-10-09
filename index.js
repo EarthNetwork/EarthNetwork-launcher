@@ -11,7 +11,7 @@ const path                          = require('path')
 const semver                        = require('semver')
 const { pathToFileURL }             = require('url')
 const redirectUriPrefix = 'https://login.microsoftonline.com/common/oauth2/nativeclient?'
-const clientID = '3530b541-1564-4c3d-bb2f-407c1b0e0e5d'
+const clientID = '7c4b0e47-d80a-4d85-a258-d4800c872b25'
 
 
 // Setup auto updater.  
@@ -92,28 +92,36 @@ ipcMain.on('distributionIndexDone', (event, res) => {
 app.disableHardwareAcceleration()
 
 let MSALoginWindow = null
+let login = false
 
 // Open the Microsoft Account Login window
 ipcMain.on('openMSALoginWindow', (ipcEvent, args) => {
-    if(MSALoginWindow != null){ 
-        ipcEvent.sender.send('MSALoginWindowNotification', 'error', 'AlreadyOpenException')
+    if (MSALoginWindow != null) {
+        ipcEvent.reply('MSALoginWindowReply', 'error', 'AlreadyOpenException')
         return
     }
     MSALoginWindow = new BrowserWindow({
-        title: 'Microsoft-Login',
+        title: 'Microsoft Login',
         backgroundColor: '#222222',
         width: 520,
         height: 600,
-        frame: false,
+        frame: true,
         icon: getPlatformIcon('SealCircle')
     })
 
     MSALoginWindow.on('closed', () => {
+
         MSALoginWindow = null
     })
 
+    MSALoginWindow.on('close', event => {
+        ipcEvent.reply('MSALoginWindowReply', 'error', 'AuthNotFinished')
+    })
+
     MSALoginWindow.webContents.on('did-navigate', (event, uri, responseCode, statusText) => {
-        if(uri.startsWith(redirectUriPrefix)) {
+        // eslint-disable-next-line no-unused-vars
+        login = true
+        if (uri.startsWith(redirectUriPrefix)) {
             let querys = uri.substring(redirectUriPrefix.length).split('#', 1).toString().split('&')
             let queryMap = new Map()
 
@@ -130,7 +138,29 @@ ipcMain.on('openMSALoginWindow', (ipcEvent, args) => {
     })
 
     MSALoginWindow.removeMenu()
-    MSALoginWindow.loadURL('https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize?prompt=consent&client_id=' + clientID + '&response_type=code&scope=XboxLive.signin%20offline_access&redirect_uri=https://login.microsoftonline.com/common/oauth2/nativeclient')
+    MSALoginWindow.loadURL('https://login.live.com/oauth20_authorize.srf?client_id='+ clientID + '&response_type=code&redirect_uri=https://login.microsoftonline.com/common/oauth2/nativeclient&scope=XboxLive.signin%20offline_access&prompt=select_account')
+})
+
+let MSALogoutWindow = null
+
+ipcMain.on('openMSALogoutWindow', (ipcEvent, args) => {
+    if (MSALogoutWindow == null) {
+        MSALogoutWindow = new BrowserWindow({
+            title: 'Microsoft Logout',
+            backgroundColor: '#222222',
+            width: 520,
+            height: 600,
+            frame: true,
+            icon: getPlatformIcon('SealCircle')
+        })
+        MSALogoutWindow.loadURL('https://login.microsoftonline.com/common/oauth2/v2.0/logout')
+        MSALogoutWindow.webContents.on('did-navigate', (e) => {
+            setTimeout(() => {
+                ipcEvent.reply('MSALogoutWindowReply')
+            }, 5000)
+
+        })
+    }
 })
 
 // https://github.com/electron/electron/issues/18397
@@ -157,6 +187,28 @@ function createWindow() {
         backgroundColor: '#171614'
     })
     remoteMain.enable(win.webContents)
+
+    let MSALogoutWindow = null
+
+ipcMain.on('openMSALogoutWindow', (ipcEvent, args) => {
+    if (MSALogoutWindow == null) {
+        MSALogoutWindow = new BrowserWindow({
+            title: 'Microsoft Logout',
+            backgroundColor: '#222222',
+            width: 520,
+            height: 600,
+            frame: true,
+            icon: getPlatformIcon('SealCircle')
+        })
+        MSALogoutWindow.loadURL('https://login.microsoftonline.com/common/oauth2/v2.0/logout')
+        MSALogoutWindow.webContents.on('did-navigate', (e) => {
+            setTimeout(() => {
+                ipcEvent.reply('MSALogoutWindowReply')
+            }, 5000)
+
+        })
+    }
+})
 
     ejse.data('bkid', Math.floor((Math.random() * fs.readdirSync(path.join(__dirname, 'app', 'assets', 'images', 'backgrounds')).length)))
 
