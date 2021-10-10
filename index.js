@@ -223,6 +223,7 @@ ipcMain.on('openMSALogoutWindow', (ipcEvent, args) => {
     win.resizable = true
 
     win.on('closed', () => {
+        if (MSALoginWindow || MSALogoutWindow) MSALoginWindow ? MSALoginWindow.close() : MSALogoutWindow.close();
         win = null
     })
 }
