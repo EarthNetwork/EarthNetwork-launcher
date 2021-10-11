@@ -875,12 +875,19 @@ body, button {
 }
 
 #loginMSButton {
-    background: none;
+    height: 50px;
+    background-color: transparent;
     border: none;
     margin-top: 5px;
     margin-bottom: 10px;
-    transform: scale(0.8, 0.8);
-    opacity: 1;
+    font-size: 20px;
+    display: flex;
+    padding: 16px;
+    gap: 15px;
+    font-weight: bold;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid #ffffff;
 }
 #loginMSButton:disabled {
     color: rgba(255, 255, 255, 0.75);
@@ -891,12 +898,12 @@ body, button {
 #loginMSButton:focus {
     text-shadow: 0px 0px 20px #fff;
     outline: none;
-    opacity: 0.8;
 }
+
 #loginMSButton:active {
     color: #c7c7c7;
     text-shadow:  0px 0px 20px #c7c7c7;
-} 
+}
 
 /*
 #login_filter {
@@ -3670,6 +3677,29 @@ input:checked + .toggleSwitchSlider:before {
     border-color: rgba(255, 255, 255, 0.75);
     color: rgba(255, 255, 255, 0.75);
 }
+
+/* Annuler la connexion Microsoft. */
+#annuler {
+    background: none;
+    border: 1px solid #ffffff;
+    color: white;
+    font-family: 'Avenir Medium';
+    font-weight: bold;
+    border-radius: 2px;
+    padding: 0px 8.1px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+#annuler:hover,
+#annuler:focus {
+    box-shadow: 0px 0px 10px 0px #fff;
+    outline: none;
+}
+#annuler:active {
+    border-color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.75);
+}
+
 
 /* Overlay dismiss option styles. */
 #overlayDismiss {

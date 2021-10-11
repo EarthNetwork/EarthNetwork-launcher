@@ -40,7 +40,7 @@ exports.addMSAccount = async authCode => {
         const MCProfile = await Microsoft.getMCProfile(MCAccessToken.access_token).catch(err => { })
         if (!MCProfile) {
             return Promise.reject({
-                message: 'You didn\'t buy Minecraft! Please use another Microsoft account or buy Minecraft.'
+                message: 'Vous n\'avez pas acheté Minecraft. Veuillez assurer que votre compte dispose d\'une copie achetée de Minecraft.'
             })
         }
         const ret = ConfigManager.addMsAuthAccount(MCProfile.id, MCAccessToken.access_token, MCProfile.name, MCAccessToken.expires_at, accessToken.access_token, accessToken.refresh_token)
@@ -123,7 +123,8 @@ exports.addAccount = async function (username, password) {
  */
 exports.removeAccount = async function (uuid) {
     try {
-        if(authAcc.type === 'microsoft'){
+        const authAcc = ConfigManager.getAuthAccount(uuid)
+        if (authAcc.type === 'microsoft') {
             ConfigManager.removeAuthAccount(uuid)
             ConfigManager.save()
             return Promise.resolve()
@@ -136,7 +137,6 @@ exports.removeAccount = async function (uuid) {
         return Promise.reject(err)
     }
 }
-
 /**
  * Validate the selected account with Mojang's authserver. If the account is not valid,
  * we will attempt to refresh the access token and update that value. If that fails, a

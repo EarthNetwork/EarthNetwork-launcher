@@ -13,6 +13,10 @@ const { pathToFileURL }             = require('url')
 const redirectUriPrefix = 'https://login.microsoftonline.com/common/oauth2/nativeclient?'
 const clientID = '7c4b0e47-d80a-4d85-a258-d4800c872b25'
 
+const gotTheLock = app.requestSingleInstanceLock();
+if (!gotTheLock) {
+    app.quit();
+}
 
 // Setup auto updater.  
 function initAutoUpdater(event, data) {
@@ -108,9 +112,10 @@ ipcMain.on('openMSALoginWindow', (ipcEvent, args) => {
         frame: true,
         icon: getPlatformIcon('SealCircle')
     })
+    this.MSALoginWindow = MSALoginWindow;
 
     MSALoginWindow.on('closed', () => {
-
+        this.MSALoginWindow = null;
         MSALoginWindow = null
     })
 
@@ -137,7 +142,7 @@ ipcMain.on('openMSALoginWindow', (ipcEvent, args) => {
         }
     })
 
-    MSALoginWindow.removeMenu()
+    //MSALoginWindow.removeMenu()
     MSALoginWindow.loadURL('https://login.live.com/oauth20_authorize.srf?client_id='+ clientID + '&response_type=code&redirect_uri=https://login.microsoftonline.com/common/oauth2/nativeclient&scope=XboxLive.signin%20offline_access&prompt=select_account')
 })
 
@@ -175,8 +180,8 @@ function createWindow() {
     win = new BrowserWindow({
         width: 980,
         minWidth: 980,
-        height: 552,
-        minHeight: 552,
+        height: 580,
+        minHeight: 580,
         icon: getPlatformIcon('SealCircle'),
         frame: false,
         webPreferences: {

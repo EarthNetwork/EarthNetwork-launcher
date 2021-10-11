@@ -5,8 +5,8 @@
     "js": {
         "login": {
             "error": {
-                "invalidValue": "* mot de passe requis",
-                "requiredValue": "* veuillez entrer votre identifiant",
+                "invalidValue": "* valeur requise",
+                "requiredValue": "* valeur requise",
                 "userMigrated": {
                     "title": "Erreur:<br>Identifiants invalides",
                     "desc": "Veuillez vous connecter avec votre email à la place de votre mot de passe.."
@@ -36,9 +36,9 @@
                 }
             },
             "login": "SE CONNECTER",
-            "loggingIn": "Connexion en cours",
-            "success": "Connecté",
-            "tryAgain": "Réessayer"
+            "loggingIn": "CONNEXION EN COURS",
+            "success": "CONNECTÉ",
+            "tryAgain": "OK"
         },
         "landing": {
             "launch": {

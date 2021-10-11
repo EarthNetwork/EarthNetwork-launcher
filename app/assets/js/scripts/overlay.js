@@ -15,6 +15,7 @@ function isOverlayVisible(){
 
 let overlayHandlerContent
 
+
 /**
  * Overlay keydown handler for a non-dismissable overlay.
  * 

@@ -19,6 +19,7 @@ const loginButton           = document.getElementById('loginButton')
 const loginForm             = document.getElementById('loginForm')
 const loginMSButton         = document.getElementById('loginMSButton')
 
+
 // Control variables.
 let lu = false, lp = false
 
@@ -343,7 +344,7 @@ ipcRenderer.on('MSALoginWindowReply', (event, ...args) => {
         loginLoading(false)
         switch (args[1]){
             case 'AlreadyOpenException': {
-                setOverlayContent('ERROR', 'There is already a login window open!', 'OK')
+                setOverlayContent('ERREUR', 'Une fenêtre de connexion est déjà ouverte. Fermez-la d\'abbord!', 'OK')
                 setOverlayHandler(() => {
                     toggleOverlay(false)
                     toggleOverlay(false, false, 'msOverlay')
@@ -352,7 +353,7 @@ ipcRenderer.on('MSALoginWindowReply', (event, ...args) => {
                 return
             }
             case 'AuthNotFinished': {
-                setOverlayContent('ERROR', 'You have to finish the login process to use ModRealms Launcher. The window will close by itself when you have successfully logged in.', 'OK')
+                setOverlayContent('ERREUR', 'Vous devez finir le processus de connexion. La fenêtre se fermera toute seule une fois celà fait', 'OK')
                 setOverlayHandler(() => {
                     toggleOverlay(false)
                     toggleOverlay(false, false, 'msOverlay')
@@ -369,8 +370,8 @@ ipcRenderer.on('MSALoginWindowReply', (event, ...args) => {
         let error = queryMap.get('error')
         let errorDesc = queryMap.get('error_description')
         if(error === 'access_denied'){
-            error = 'ERRPR'
-            errorDesc = 'To use our launcher, you must agree to the required permissions, otherwise you can\'t use this launcher with Microsoft accounts.<br><br>Despite agreeing to the permissions you don\'t give us the possibility to do anything with your account, because all data will always be sent back to you (the launcher).'
+            error = 'ERREUR'
+            errorDesc = 'Pour utiliser le launcher, vous devez accepter les permissions requises. Sinon, vous ne pourrez pas accéder au reste des launchers.<br><br>Ne pas accorder les permissions nécessaires nous empêchent de vous connecter sur nos serveurs car nous ne pouvons accéder aux données nécéssaires.'
         }        
         setOverlayContent(error, errorDesc, 'OK')
         setOverlayHandler(() => {
@@ -412,7 +413,7 @@ ipcRenderer.on('MSALoginWindowReply', (event, ...args) => {
     }).catch(error => {
         loginMSButton.disabled = false
         loginLoading(false)
-        setOverlayContent('ERROR', error.message ? error.message : 'An error occurred while logging in with Microsoft! For more detailed information please check the log. You can open it with CTRL + SHIFT + I.', Lang.queryJS('login.tryAgain'))
+        setOverlayContent('ERREUR', error.message ? error.message : 'Une erreur innatendue s\'est produite. Envoyez-nous sur Discord le contenu de la console (CTRL + SHIFT + I).', Lang.queryJS('login.tryAgain'))
         setOverlayHandler(() => {
             formDisabled(false)
             toggleOverlay(false)
@@ -420,5 +421,4 @@ ipcRenderer.on('MSALoginWindowReply', (event, ...args) => {
         toggleOverlay(true)
         loggerLogin.error(error)
     })
-
 })
