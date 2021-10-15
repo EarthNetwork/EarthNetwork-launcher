@@ -89,7 +89,7 @@ function setLaunchEnabled(val) {
  *
  * @param {string} the text to set the launch button to.
  */
-function setLaunchButtonText(text){
+function setLaunchButtonText(text) {
     document.getElementById('launch_button').innerHTML = text
 }
 
@@ -151,7 +151,7 @@ function updateSelectedAccount(authUser) {
         if (authUser.displayName != null) {
             username = authUser.displayName
         }
-        if(authUser.uuid != null){
+        if (authUser.uuid != null) {
             document.getElementById('avatarContainer').style.backgroundImage = `url('https://mc-heads.net/body/${authUser.uuid}/right')`
         }
     }
@@ -171,7 +171,7 @@ function updateSelectedServer(serv) {
         animateModsTabRefresh()
     }
     setLaunchEnabled(serv != null)
-    if(serv){
+    if (serv) {
         setLaunchButtonText(fs.pathExistsSync(path.join(ConfigManager.getDataDirectory(), 'instances', serv.getID())) ? 'JOUER' : 'INSTALLER</br>ET JOUER')
     } else {
         setLaunchButtonText('JOUER')
@@ -186,6 +186,7 @@ server_selection_button.onclick = (e) => {
     toggleServerSelection(true)
 }
 
+/*
 // Update Mojang Status Color
 const refreshMojangStatuses = async function () {
     loggerLanding.log('Refreshing Mojang Statuses..')
@@ -196,44 +197,48 @@ const refreshMojangStatuses = async function () {
 
     try {
         const statuses = await Mojang.status()
+        loggerLanding.debug(statuses)
         greenCount = 0
-        greyCount = 0
+        greyCount = 0 // Still runned
+        statuses.forEach(status => {
+            if (status.status == "green") greenCount = greenCount + 1
+            else greenCount = greyCount + 1
 
-        for (let i = 0; i < statuses.length; i++) {
-            const service = statuses[i]
 
-            if(service.essential){
+
+            if (statuses[i].essential) {
                 tooltipEssentialHTML += `<div class="mojangStatusContainer">
-                    <span class="mojangStatusIcon" style="color: ${Mojang.statusToHex(service.status)};">&#8226;</span>
-                    <span class="mojangStatusName">${service.name}</span>
+                    <span class="mojangStatusIcon" style="color: ${Mojang.statusToHex(statuses[i].status)};">&#8226;</span>
+                    <span class="mojangStatusName">${statuses[i].name}</span>
                 </div>`
             } else {
                 tooltipNonEssentialHTML += `<div class="mojangStatusContainer">
-                    <span class="mojangStatusIcon" style="color: ${Mojang.statusToHex(service.status)};">&#8226;</span>
-                    <span class="mojangStatusName">${service.name}</span>
+                    <span class="mojangStatusIcon" style="color: ${Mojang.statusToHex(statuses[i].status)};">&#8226;</span>
+                    <span class="mojangStatusName">${statuses[i].name}</span>
                 </div>`
             }
 
-            if (service.status === 'yellow' && status !== 'red') {
+
+            if (statuses[i].status === 'yellow' && status !== 'red') {
                 status = 'yellow'
-            } else if (service.status === 'red') {
+            } else if (statuses[i].status === 'red') {
                 status = 'red'
             } else {
-                if (service.status === 'grey') {
+                if (statuses[i].status === 'grey') {
                     ++greyCount
                 }
                 ++greenCount
             }
 
-        }
 
-        if (greenCount === statuses.length) {
-            if (greyCount === statuses.length) {
-                status = 'grey'
-            } else {
-                status = 'green'
+            if (greenCount === statuses.length) {
+                if (greyCount === statuses.length) {
+                    status = 'grey'
+                } else {
+                    status = 'green'
+                }
             }
-        }
+        })
 
     } catch (err) {
         loggerLanding.warn('Unable to refresh Mojang service status.')
@@ -243,7 +248,7 @@ const refreshMojangStatuses = async function () {
     document.getElementById('mojangStatusEssentialContainer').innerHTML = tooltipEssentialHTML
     document.getElementById('mojangStatusNonEssentialContainer').innerHTML = tooltipNonEssentialHTML
     document.getElementById('mojang_status_icon').style.color = Mojang.statusToHex(status)
-}
+}*/
 
 const refreshServerStatus = async function (fade = false) {
     loggerLanding.log('Actualisation du status des serveurs Mojang.')
@@ -291,7 +296,7 @@ function loadDiscord() {
     }
 }
 
-refreshMojangStatuses()
+//refreshMojangStatuses()
 // Server Status is refreshed in uibinder.js on distributionIndexDone.
 
 // Set refresh rate to once every 5 minutes.
@@ -366,7 +371,7 @@ function asyncSystemScan(mcVersion, launchAfter = true) {
                 // Show this information to the user.
                 setOverlayContent(
                     "Aucune version compatible de <br>Java n'a été trouvée",
-                    'Pour rejoindre RTMC, vous devez installer Java 8 x64. Voulez-vous que nous installions Java? En insatallant, vous acceptez <a href="http://www.oracle.com/technetwork/java/javase/terms/license/index.html">La licence Java</a>.',
+                    'Pour rejoindre EarthNetwork, vous devez installer Java 8 x64. Voulez-vous que nous installions Java? En insatallant, vous acceptez <a href="http://www.oracle.com/technetwork/java/javase/terms/license/index.html">La licence Java</a>.',
                     'Installer Java',
                     'Installer Manuellement'
                 )
@@ -751,9 +756,8 @@ function dlAsync(login = true) {
                 const gameStateChange = function (data) {
                     data = data.trim()
                     if (SERVER_JOINED_REGEX.test(data)) {
-                        DiscordWrapper.updateDetails('Exploration de RTMC...')
+                        DiscordWrapper.updateDetails('Exploration de EarthNetwork...')
                     } else if (GAME_JOINED_REGEX.test(data)) {
-                        //DiscordWrapper.updateDetails('En jeu sur RTMC!')
                         DiscordWrapper.resetTime()
                     }
                 }
@@ -762,7 +766,7 @@ function dlAsync(login = true) {
                     data = data.trim()
                     if (data.indexOf('Impossible de trouver net.minecraft.launchwrapper.Launch') > -1) {
                         loggerLaunchSuite.error('Problème de lancement du jeu, LaunchWrapper n\'a pas été téléchargé proprement.')
-                        showLaunchFailure('Problème du lancement du jeu.', 'Le fichier, LaunchWrapper, n\'a pas été téléchargé proprement. Le jeu n\'a pas pu être lancé.<br><br>Veuillez essayez de désactiver temporairement votre antivirus.<br><br>Veuillez créer une issue <a href="https://github.com/GeekCornerGH/RTMC-launcher/issues">ici</a>.')
+                        showLaunchFailure('Problème du lancement du jeu.', 'Le fichier, LaunchWrapper, n\'a pas été téléchargé proprement. Le jeu n\'a pas pu être lancé.<br><br>Veuillez essayez de désactiver temporairement votre antivirus.<br><br>Veuillez créer une issue <a href="https://github.com/EarthNetwork/EarthNetwork-Launcher/issues">ici</a>.')
                     }
                 }
 

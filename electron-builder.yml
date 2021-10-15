@@ -32,7 +32,7 @@ mac:
     - target: 'dmg'
       arch:
         - 'universal'
-  artifactName: '${productName}-setup-${version}-universal.${ext}'
+  artifactName: 'Earth_Network-setup-${version}-universal.${ext}'
   category: 'public.app-category.games'
 
 # Linux Configuration

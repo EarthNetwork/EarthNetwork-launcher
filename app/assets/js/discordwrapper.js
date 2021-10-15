@@ -14,7 +14,8 @@ exports.initRPC = function(genSettings, servSettings, initialDetails = 'En atten
         largeImageKey: genSettings.smallImageKey,
         largeImageText: genSettings.smallImageText,
         startTimestamp: new Date().getTime(),
-        instance: false
+        instance: false,
+        buttons: [{label: "🎮 Rejoignez-nous!", url: "https://mcearth.network"}, {label: "📥 Télécharger le launcher", url: "https://github.com/EarthNetwork/EarthNetowrk-launcher"}]
     }
 
     client.on('ready', () => {
@@ -46,7 +47,8 @@ exports.clearState = function(){
             largeImageKey: activity.largeImageKey,
             largeImageText: activity.largeImageText,
             startTimestamp: activity.startTimestamp,
-            instance: activity.instance
+            instance: activity.instance,
+            buttons: activity.buttons
         }
         client.setActivity(activity)
         logger.log('Cleared the activity state!')

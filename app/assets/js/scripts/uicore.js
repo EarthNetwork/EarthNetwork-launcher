@@ -51,7 +51,7 @@ if(!isDev){
                 loggerAutoUpdaterSuccess.log('Nouvelle version disponible', info.version)
                 
                 if(process.platform === 'darwin'){
-                    info.darwindownload = `https://github.com/GeekCornerGH/RTMC-launcher/releases/download/v${info.version}/RTMC-launcher-${info.version}${process.arch === 'arm64' ? 'arm64' : ''}.dmg`
+                    info.darwindownload = `https://github.com/EarthNetwork/EarthNetwork-launcher/releases/download/v${info.version}/Earth_Network-launcher-${info.version}-universal.dmg`
                     showUpdateUI(info)
                 }
                 

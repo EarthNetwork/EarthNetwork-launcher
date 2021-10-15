@@ -1441,7 +1441,7 @@ function populateAboutVersionInformation() {
  */
 function populateReleaseNotes() {
     $.ajax({
-        url: 'https://github.com/GeekCornerGH/RTMC-launcher/releases.atom',
+        url: 'https://github.com/EarthNetwork/EarthNetwork-Launcher/releases.atom',
         success: (data) => {
             const version = 'v' + remote.app.getVersion()
             const entries = $(data).find('entry')
