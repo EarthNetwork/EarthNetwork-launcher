@@ -303,6 +303,9 @@ function loadDiscord() {
 let mojangStatusListener = setInterval(() => refreshMojangStatuses(true), 300000)
 let serverStatusListener = setInterval(() => refreshServerStatus(true), 300000)
 
+
+setTimeout(() => refreshMojangStatuses(true), 1000) //workaround to make sure statuses are correctly shown, else its a kinda broken
+
 /**
  * Shows an error overlay, toggles off the launch area.
  * 

@@ -55,28 +55,28 @@ function getCurrentView(){
     return currentView
 }
 
-function showMainUI(data){
-
+async function showMainUI(data){
+    await require("./assets/js/mojang").status
     if(!isDev){
-        loggerAutoUpdater.log('Initializing..')
-        ipcRenderer.send('autoUpdateAction', 'initAutoUpdater', ConfigManager.getAllowPrerelease())
+        await loggerAutoUpdater.log('Initializing..')
+        await ipcRenderer.send('autoUpdateAction', 'initAutoUpdater', ConfigManager.getAllowPrerelease())
     }
 
-    prepareSettings(true)
-    updateSelectedServer(data.getServer(ConfigManager.getSelectedServer()))
-    refreshServerStatus()
-    loadDiscord()
-    setTimeout(() => {
+    await prepareSettings(true)
+    await updateSelectedServer(data.getServer(ConfigManager.getSelectedServer()))
+    await refreshServerStatus()
+    await loadDiscord()
+    setTimeout(async () => {
         document.getElementById('frameBar').style.backgroundColor = 'rgba(0, 0, 0, 0.5)'
         document.body.style.backgroundImage = `url('assets/images/backgrounds/${document.body.getAttribute('bkid')}.jpg')`
-        $('#main').show()
+        await $('#main').show()
 
         const isLoggedIn = Object.keys(ConfigManager.getAuthAccounts()).length > 0
 
         // If this is enabled in a development environment we'll get ratelimited.
         // The relaunch frequency is usually far too high.
         if(!isDev && isLoggedIn){
-            validateSelectedAccount()
+            await validateSelectedAccount()
         }
 
         if(ConfigManager.isFirstLaunch()){
@@ -109,9 +109,9 @@ function showMainUI(data){
             }
         }
 
-        setTimeout(() => {
-            $('#loadingContainer').fadeOut(500, () => {
-                $('#loadSpinnerImage').removeClass('rotating')
+        setTimeout(async () => {
+            await $('#loadingContainer').fadeOut(500, async () => {
+                await $('#loadSpinnerImage').removeClass('rotating')
             })
         }, 250)
         

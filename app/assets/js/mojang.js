@@ -6,6 +6,7 @@
  * @module mojang
  */
 // Requirements
+const request = require('request')
 const logger = require('./loggerutil')('%c[Mojang]', 'color: #a02d2a; font-weight: bold')
 
 // Constants
@@ -14,39 +15,40 @@ const minecraftAgent = {
     version: 1
 }
 const authpath = 'https://authserver.mojang.com'
+// Service name comes from https://github.com/GeekcornerGH/helios-status-page/tree/master/api
 const statuses = [
     {
-        service: 'http://session.minecraft.net',
+        service: 'mojang-multiplayer-session-service',
         status: 'grey',
         name: 'Sessions multijoueurs',
         essential: true
     },
     {
-        service: 'https://authserver.mojang.com/',
+        service: 'mojang-authserver',
         status: 'grey',
         name: "Serveurs d'authentification",
         essential: true
     },
     {
-        service: 'https://textures.minecraft.net',
+        service: 'minecraft-skins',
         status: 'grey',
         name: 'Skins Minecraft',
         essential: false
     },
     {
-        service: 'https://api.mojang.com/',
+        service: 'mojang-s-public-api',
         status: 'grey',
         name: 'API Publique',
         essential: false
     },
     {
-        service: 'minecraft.net', // Use ping for this one
+        service: 'minecraft-net-website',
         status: 'grey',
         name: 'Minecraft.net',
         essential: false
     },
     {
-        service: 'https://account.mojang.com/',
+        service: 'mojang-accounts-website',
         status: 'grey',
         name: 'Site des comptes Mojang',
         essential: false
@@ -80,8 +82,39 @@ const statuses = [
         status: 'grey',
         name: 'Profil Minecraft',
         essential: false
+    },
+    {
+        service: 'microsoft-o-auth-server',
+        status: 'grey',
+        name: 'Microsoft OAuth Server',
+        essential: true
+    },
+    {
+        service: 'xbox-live-auth-server',
+        status: 'grey',
+        name: 'Xbox Live Auth Server',
+        essential: true
+    },
+    {
+        service: 'xbox-live-gatekeeper', // Server used to give XTokens
+        status: 'grey',
+        name: 'Xbox Live Gatekeeper',
+        essential: true
+    },
+    {
+        service: 'microsoft-minecraft-api',
+        status: 'grey',
+        name: "Minecraft API for Microsoft Accounts",
+        essential: true
+    },
+    {
+        service: 'microsoft-minecraft-profile',
+        status: "grey",
+        name: "Minecraft Profile for Microsoft Accounts",
+        essential: false
     }
 ]
+const requestURL = function (serviceURL) { return `https://raw.githubusercontent.com/GeekCornerGH/helios-status-page/master/api/${serviceURL.service}/uptime.json`}
 
 // Functions
 
@@ -115,23 +148,34 @@ exports.statusToHex = function (status) {
  * 
  * @see http://wiki.vg/Mojang_API#API_Status
  */
-/*exports.status = function () {
-    return new Promise((resolve, reject) => {
-        statuses.forEach(async service => {
-            const { statusCode } = curly.get('https://status.mojang.com/check')
-            const code = [200, 401, 403]
+exports.status = async function () {
+    return new Promise(async (resolve, reject) => {
+        let data = []
+        for(let i=0; i<statuses.length; i++){
+            request.get(requestURL(statuses[i]),
+                {
+                    json: true,
+                    timeout: 10000
+                },
+                function (error, response, body) {
 
-            if (code.includes(statusCode)) {
-                service.status = 'green'
-                resolve(statuses)
-            } else {
-                service.status = "grey"
-                resolve(statuses)
-            }
-        })
-        return statuses
+                    if (error || response.statusCode !== 200) {
+                        logger.warn('Unable to retrieve Mojang status.')
+                        logger.debug('Error while retrieving Mojang statuses:', error)
+                        data.push(statuses[i])
+                        //reject(error || response.statusCode)
+                        resolve(statuses)
+                    } else {
+                        if (response.body.color == "brightgreen") statuses[i].status = "green"
+                        else statuses[i].status = "red"
+                        data.push(statuses[i])
+                        resolve(statuses)
+                    }
+                })
+        }
+        return data
     })
-}*/
+}
 
 /**
  * Authenticate a user with their Mojang credentials.
