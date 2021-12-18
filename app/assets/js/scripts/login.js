@@ -413,7 +413,8 @@ ipcRenderer.on('MSALoginWindowReply', (event, ...args) => {
     }).catch(error => {
         loginMSButton.disabled = false
         loginLoading(false)
-        setOverlayContent('ERREUR', error.message ? error.message : 'Une erreur innatendue s\'est produite. Envoyez-nous sur Discord le contenu de la console (CTRL + SHIFT + I).', Lang.queryJS('login.tryAgain'))
+        if (error[1] == "Unauthorized") setOverlayContent('Trop jeune', 'Veuillez demander à vos parents de créer une famille Microsoft <a href="https://account.microsoft.com/family/">ici</a> et de vous y ajouter.', Lang.queryJS('login.tryAgain'))
+        else setOverlayContent('ERREUR', error.message ? error.message : 'Une erreur innatendue s\'est produite. Envoyez-nous sur Discord le contenu de la console (CTRL + SHIFT + I).', Lang.queryJS('login.tryAgain'))
         setOverlayHandler(() => {
             formDisabled(false)
             toggleOverlay(false)

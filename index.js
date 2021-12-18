@@ -195,25 +195,6 @@ function createWindow() {
 
     let MSALogoutWindow = null
 
-ipcMain.on('openMSALogoutWindow', (ipcEvent, args) => {
-    if (MSALogoutWindow == null) {
-        MSALogoutWindow = new BrowserWindow({
-            title: 'Microsoft Logout',
-            backgroundColor: '#222222',
-            width: 520,
-            height: 600,
-            frame: true,
-            icon: getPlatformIcon('SealCircle')
-        })
-        MSALogoutWindow.loadURL('https://login.microsoftonline.com/common/oauth2/v2.0/logout')
-        MSALogoutWindow.webContents.on('did-navigate', (e) => {
-            setTimeout(() => {
-                ipcEvent.reply('MSALogoutWindowReply')
-            }, 5000)
-
-        })
-    }
-})
 
     ejse.data('bkid', Math.floor((Math.random() * fs.readdirSync(path.join(__dirname, 'app', 'assets', 'images', 'backgrounds')).length)))
 

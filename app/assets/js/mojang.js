@@ -6,7 +6,6 @@
  * @module mojang
  */
 // Requirements
-const ping = require('ping')
 const logger = require('./loggerutil')('%c[Mojang]', 'color: #a02d2a; font-weight: bold')
 
 // Constants

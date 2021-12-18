@@ -390,11 +390,11 @@ function bindAuthAccountSelect() {
             for (let i = 0; i < selectBtns.length; i++) {
                 if (selectBtns[i].hasAttribute('selected')) {
                     selectBtns[i].removeAttribute('selected')
-                    selectBtns[i].innerHTML = 'Select Account'
+                    selectBtns[i].innerHTML = 'Utiliser ce compte'
                 }
             }
             val.setAttribute('selected', '')
-            val.innerHTML = 'Selected Account &#10004;'
+            val.innerHTML = 'Compte actuel &#10004;'
             setSelectedAccount(val.closest('.settingsAuthAccount').getAttribute('uuid'))
         }
     })
@@ -495,7 +495,7 @@ function refreshAuthAccountSelected(uuid) {
             if (selBtn.hasAttribute('selected')) {
                 selBtn.removeAttribute('selected')
             }
-            selBtn.innerHTML = 'Select Account'
+            selBtn.innerHTML = 'Utiliser ce compte'
         }
     })
 }
