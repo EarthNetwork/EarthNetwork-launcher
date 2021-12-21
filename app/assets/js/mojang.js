@@ -20,19 +20,19 @@ const statuses = [
     {
         service: 'mojang-multiplayer-session-service',
         status: 'grey',
-        name: 'Sessions multijoueurs',
+        name: 'Service de session multijoueur',
         essential: true
     },
     {
         service: 'mojang-authserver',
         status: 'grey',
-        name: "Serveurs d'authentification",
+        name: 'Service d\'authentification',
         essential: true
     },
     {
         service: 'minecraft-skins',
         status: 'grey',
-        name: 'Skins Minecraft',
+        name: 'Skins',
         essential: false
     },
     {
@@ -54,63 +54,33 @@ const statuses = [
         essential: false
     },
     {
-        service: 'https://login.microsoftonline.com/consumers/oauth2/v2.0/token',
-        status: 'grey',
-        name: 'API OAuth Microsoft',
-        essential: true
-    },
-    {
-        service: 'https://user.auth.xboxlive.com/user/authenticate',
-        status: 'grey',
-        name: 'API Xbox Live',
-        essential: true
-    },
-    {
-        service: 'https://xsts.auth.xboxlive.com/xsts/authorize',
-        status: 'grey',
-        name: 'Serveurs d\'authentification Xbox Live',
-        essential: true
-    },
-    {
-        service: 'https://api.minecraftservices.com/authentication/login_with_xbox',
-        status: 'grey',
-        name: 'Lisaison Minecraft x Xbox Live',
-        essential: true
-    },
-    {
-        service: 'https://api.minecraftservices.com/minecraft/profile',
-        status: 'grey',
-        name: 'Profil Minecraft',
-        essential: false
-    },
-    {
         service: 'microsoft-o-auth-server',
         status: 'grey',
-        name: 'Microsoft OAuth Server',
+        name: 'Serveur Microsoft OAuth',
         essential: true
     },
     {
         service: 'xbox-live-auth-server',
         status: 'grey',
-        name: 'Xbox Live Auth Server',
+        name: 'Serveur d\'Authentification Xbox Live',
         essential: true
     },
     {
         service: 'xbox-live-gatekeeper', // Server used to give XTokens
         status: 'grey',
-        name: 'Xbox Live Gatekeeper',
+        name: 'Gatekeeper Xbox Live',
         essential: true
     },
     {
         service: 'microsoft-minecraft-api',
         status: 'grey',
-        name: "Minecraft API for Microsoft Accounts",
+        name: "API Minecraft pour comptes Microsoft",
         essential: true
     },
     {
         service: 'microsoft-minecraft-profile',
         status: "grey",
-        name: "Minecraft Profile for Microsoft Accounts",
+        name: "Profils Minecraft pour comptes Microsoft",
         essential: false
     }
 ]
@@ -150,6 +120,7 @@ exports.statusToHex = function (status) {
  */
 exports.status = async function () {
     return new Promise(async (resolve, reject) => {
+        console.log(statuses)
         let data = []
         for(let i=0; i<statuses.length; i++){
             request.get(requestURL(statuses[i]),

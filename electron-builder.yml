@@ -1,4 +1,4 @@
-appId: 'network.mcearth.launcher'
+appId: 'fr.earthnetwork.launcher'
 productName: 'EarthNetwork Launcher'
 artifactName: '${productName}-setup-${version}.${ext}'
 

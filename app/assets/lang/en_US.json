@@ -1,6 +1,6 @@
 {
     "html": {
-        "avatarOverlay": "Editer"
+        "avatarOverlay": "Changer"
     },
     "js": {
         "login": {
@@ -9,7 +9,7 @@
                 "requiredValue": "* valeur requise",
                 "userMigrated": {
                     "title": "Erreur:<br>Identifiants invalides",
-                    "desc": "Veuillez vous connecter avec votre email à la place de votre mot de passe.."
+                    "desc": "Veuillez vous connecter avec votre email à la place de votre nom d'utilisateur..."
                 },
                 "invalidCredentials": {
                     "title": "Erreur:<br>Identifiants invalides",

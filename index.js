@@ -95,7 +95,6 @@ ipcMain.on('distributionIndexDone', (event, res) => {
 // https://electronjs.org/docs/tutorial/offscreen-rendering
 app.disableHardwareAcceleration()
 
-<<<<<<< HEAD
 let MSALoginWindow = null
 let login = false
 
@@ -143,7 +142,7 @@ ipcMain.on('openMSALoginWindow', (ipcEvent, args) => {
         }
     })
 
-    //MSALoginWindow.removeMenu()
+    MSALoginWindow.removeMenu()
     MSALoginWindow.loadURL('https://login.live.com/oauth20_authorize.srf?client_id='+ clientID + '&response_type=code&redirect_uri=https://login.microsoftonline.com/common/oauth2/nativeclient&scope=XboxLive.signin%20offline_access&prompt=select_account')
 })
 
@@ -172,8 +171,6 @@ ipcMain.on('openMSALogoutWindow', (ipcEvent, args) => {
 // https://github.com/electron/electron/issues/18397
 app.allowRendererProcessReuse = true
 
-=======
->>>>>>> tmp/helios-status-fix
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
@@ -199,7 +196,9 @@ function createWindow() {
     let MSALogoutWindow = null
 
 
-    ejse.data('bkid', Math.floor((Math.random() * fs.readdirSync(path.join(__dirname, 'app', 'assets', 'images', 'backgrounds')).length)))
+    //ejse.data('bkid', Math.floor((Math.random() * fs.readdirSync(path.join(__dirname, 'app', 'assets', 'images', 'backgrounds')).length)))
+    let backgroundDir = fs.readdirSync(path.join(__dirname, 'app', 'assets', 'images', 'backgrounds'))
+    ejse.data('bkid', Array.from(backgroundDir.values())[Math.floor((Math.random() * backgroundDir.length))])
 
     win.loadURL(pathToFileURL(path.join(__dirname, 'app', 'app.ejs')).toString())
 

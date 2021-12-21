@@ -15,7 +15,7 @@ exports.initRPC = function(genSettings, servSettings, initialDetails = 'En atten
         largeImageText: genSettings.smallImageText,
         startTimestamp: new Date().getTime(),
         instance: false,
-        buttons: [{label: "🎮 Rejoignez-nous!", url: "https://mcearth.network"}, {label: "📥 Télécharger le launcher", url: "https://github.com/EarthNetwork/EarthNetowrk-launcher"}]
+        buttons: [{label: "🎮 Rejoignez-nous!", url: "https://earthnetwork.fr"}, {label: "📥 Télécharger le launcher", url: "https://github.com/EarthNetwork/EarthNetowrk-launcher/releases"}]
     }
 
     client.on('ready', () => {

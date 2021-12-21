@@ -48,43 +48,9 @@ Téléchargez le launcher depuis l'onglet [Releases](https://github.com/EarthNet
 
 | Platform | File |
 | -------- | ---- |
-<<<<<<< HEAD
 | Windows x64 | `EarthNetwork-launcher-setup-VERSION.exe` |
 | macOS | `EarthNetwork-launcher-setup-VERSION-universal.dmg` |
 | Linux x64 | `EarthNetwork-launcher-linux-VERSION.AppImage` |
-=======
-| Windows x64 | `Helios-Launcher-setup-VERSION.exe` |
-| macOS x64 | `Helios-Launcher-setup-VERSION.dmg` |
-| macOS arm64 | `Helios-Launcher-setup-VERSION-arm64.dmg` |
-| Linux x64 | `Helios-Launcher-setup-VERSION.AppImage` |
-
-## Console
-
-To open the console, use the following keybind.
-
-```console
-ctrl + shift + i
-```
-
-Ensure that you have the console tab selected. Do not paste anything into the console unless you are 100% sure of what it will do. Pasting the wrong thing can expose sensitive information.
-
-#### Export Output to a File
-
-If you want to export the console output, simply right click anywhere on the console and click **Save as..**
-
-![console example](https://i.imgur.com/T5e73jP.png)
-
-
-## Development
-
-This section details the setup of a basic developmentment environment.
-
-### Getting Started
-
-**System Requirements**
-
-* [Node.js][nodejs] v16
->>>>>>> tmp/helios-status-fix
 
 ---
 

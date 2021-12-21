@@ -159,6 +159,14 @@ function updateSelectedAccount(authUser) {
 }
 updateSelectedAccount(ConfigManager.getSelectedAccount())
 
+// Background random
+function randomiseBackground() {
+    let backgroundDir = fs.readdirSync(path.join(__dirname, 'assets', 'images', 'backgrounds'))
+    const backgrounds = Array.from(backgroundDir.values())
+    const bkid = backgrounds[Math.floor((Math.random() * backgroundDir.length))]
+    document.body.style.backgroundImage = `url('assets/images/backgrounds/${bkid}')`
+}
+
 // Bind selected server
 function updateSelectedServer(serv) {
     server_selection_button.innerHTML = (serv != null ? serv.getName() : 'Aucun serveur séléctionné')
@@ -188,6 +196,8 @@ server_selection_button.onclick = (e) => {
 
 /*
 // Update Mojang Status Color
+*/
+
 const refreshMojangStatuses = async function () {
     loggerLanding.log('Refreshing Mojang Statuses..')
 
@@ -200,31 +210,32 @@ const refreshMojangStatuses = async function () {
         loggerLanding.debug(statuses)
         greenCount = 0
         greyCount = 0 // Still runned
-        statuses.forEach(status => {
-            if (status.status == "green") greenCount = greenCount + 1
+        
+        statuses.forEach(service => {
+            if (service.status == "green") greenCount = greenCount ++
             else greenCount = greyCount + 1
 
 
 
-            if (statuses[i].essential) {
+            if (service.essential) {
                 tooltipEssentialHTML += `<div class="mojangStatusContainer">
-                    <span class="mojangStatusIcon" style="color: ${Mojang.statusToHex(statuses[i].status)};">&#8226;</span>
-                    <span class="mojangStatusName">${statuses[i].name}</span>
+                    <span class="mojangStatusIcon" style="color: ${Mojang.statusToHex(service.status)};">&#8226;</span>
+                    <span class="mojangStatusName">${service.name}</span>
                 </div>`
             } else {
                 tooltipNonEssentialHTML += `<div class="mojangStatusContainer">
-                    <span class="mojangStatusIcon" style="color: ${Mojang.statusToHex(statuses[i].status)};">&#8226;</span>
-                    <span class="mojangStatusName">${statuses[i].name}</span>
+                    <span class="mojangStatusIcon" style="color: ${Mojang.statusToHex(service.status)};">&#8226;</span>
+                    <span class="mojangStatusName">${service.name}</span>
                 </div>`
             }
 
 
-            if (statuses[i].status === 'yellow' && status !== 'red') {
+            if (service.status === 'yellow' && service.status !== 'red') {
                 status = 'yellow'
-            } else if (statuses[i].status === 'red') {
+            } else if (service.status === 'red') {
                 status = 'red'
             } else {
-                if (statuses[i].status === 'grey') {
+                if (service.status === 'grey') {
                     ++greyCount
                 }
                 ++greenCount
@@ -248,7 +259,7 @@ const refreshMojangStatuses = async function () {
     document.getElementById('mojangStatusEssentialContainer').innerHTML = tooltipEssentialHTML
     document.getElementById('mojangStatusNonEssentialContainer').innerHTML = tooltipNonEssentialHTML
     document.getElementById('mojang_status_icon').style.color = Mojang.statusToHex(status)
-}*/
+}
 
 const refreshServerStatus = async function (fade = false) {
     loggerLanding.log('Actualisation du status des serveurs Mojang.')
@@ -296,7 +307,7 @@ function loadDiscord() {
     }
 }
 
-//refreshMojangStatuses()
+refreshMojangStatuses()
 // Server Status is refreshed in uibinder.js on distributionIndexDone.
 
 // Set refresh rate to once every 5 minutes.
@@ -304,7 +315,7 @@ let mojangStatusListener = setInterval(() => refreshMojangStatuses(true), 300000
 let serverStatusListener = setInterval(() => refreshServerStatus(true), 300000)
 
 
-setTimeout(() => refreshMojangStatuses(true), 1000) //workaround to make sure statuses are correctly shown, else its a kinda broken
+setTimeout(() => refreshMojangStatuses(), 1000) //workaround to make sure statuses are correctly shown, else its a kinda broken
 
 /**
  * Shows an error overlay, toggles off the launch area.
@@ -707,7 +718,6 @@ function dlAsync(login = true) {
                     toggleLaunchArea(false)
                     if (hasRPC) {
                         DiscordWrapper.updateDetails('Chargement du jeu...')
-                        DiscordWrapper.resetTime()
                     }
                     proc.stdout.on('data', gameStateChange)
                     proc.stdout.removeListener('data', tempListener)
@@ -788,7 +798,6 @@ function dlAsync(login = true) {
                             const serv = DistroManager.getDistribution().getServer(ConfigManager.getSelectedServer())
                             DiscordWrapper.updateDetails('Prêt à jouer')
                             DiscordWrapper.updateState('Serveur: ' + serv.getName())
-                            DiscordWrapper.resetTime()
                         }
                     })
 

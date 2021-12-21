@@ -122,6 +122,7 @@ function toggleServerSelection(toggleState){
     prepareServerSelectionList()
     toggleOverlay(toggleState, true, 'serverSelectContent')
     DiscordWrapper.updateDetails('Sélectionne un serveur...')
+    DiscordWrapper.clearState()
 }
 
 /**
@@ -218,6 +219,21 @@ document.getElementById('accountSelectConfirm').addEventListener('click', () => 
 
 // Bind server select cancel button.
 document.getElementById('serverSelectCancel').addEventListener('click', () => {
+    if (hasRPC) {
+        const serv = DistroManager.getDistribution().getServer(ConfigManager.getSelectedServer())
+        DiscordWrapper.updateDetails('Prêt à jouer')
+        DiscordWrapper.updateState('Serveur: ' + serv.getName())
+    }
+    toggleOverlay(false)
+})
+
+// Bind server select submit button
+document.getElementById('serverSelectConfirm').addEventListener('click', () => {
+    if (hasRPC) {
+        const serv = DistroManager.getDistribution().getServer(ConfigManager.getSelectedServer())
+        DiscordWrapper.updateDetails('Prêt à jouer')
+        DiscordWrapper.updateState('Serveur: ' + serv.getName())
+    }
     toggleOverlay(false)
 })
 

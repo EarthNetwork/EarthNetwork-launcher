@@ -3214,6 +3214,15 @@ input:checked + .toggleSwitchSlider:before {
     transition-delay:0s;
 }
 
+/* Website icon colors. */
+#linkSVG:hover,
+#linkSVG:focus #linkSVG {
+    fill: #00FFFF;
+}
+#linkSVG:active {
+    fill: #00FFFF;
+}
+
 /* Twitter icon colors. */
 #twitterSVG:hover,
 #twitterURL:focus #twitterSVG {
@@ -3236,19 +3245,19 @@ input:checked + .toggleSwitchSlider:before {
 /* Youtube icon colors. */
 #youtubeSVG:hover,
 #youtubeURL:focus #youtubeSVG {
-    fill: #f00;
+    fill: #FF0000;
 }
 #youtubeSVG:active {
-    fill: #ea0202;
+    fill: #FF0000;
 }
 
 /* Discord icon colors. */
 #discordSVG:hover,
 #discordURL:focus #discordSVG {
-    fill: #7288d9;
+    fill: #5865F2;
 }
 #discordSVG:active {
-    fill: #657ac4;
+    fill: #5865F2;
 }
 
 /*******************************************************************************
