@@ -219,8 +219,10 @@ async function createWindow() {
         if (MSALoginWindow || MSALogoutWindow) MSALoginWindow ? MSALoginWindow.close() : MSALogoutWindow.close();
         win = null
     })
+    win.once("ready-to-show", () => {
+        updater.close()
+    })
 }
-
 function createMenu() {
     
     if(process.platform === 'darwin') {

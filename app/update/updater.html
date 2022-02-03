@@ -112,8 +112,8 @@
             }
         </style>
         <h1 class="special"><b>EarthNetwork</b></h1>
-        <div id="fact">Récurrage des blocs</div>
-        <div id="author" style="color:grey">Envoyé par un inconnu</div>
+        <div id="fact">Restauration des couleurs</div>
+        <div id="author" style="color:grey">- Inconnu</div>
         <div>Version: <b id="currentVersion">0.0.0</b></div>
 
         <p class="dull" id="status" style="margin-top: 0.4rem; font-size: 0.9rem">Verification des mises à jour...</p>
@@ -122,8 +122,7 @@
         document.onload = fact();
 
         async function fact() {
-            //const data = await fetch("./facts.json");
-            const data = ["Récurrage des blocs"];
+            const data = await fetch("https://files.earthnetwork.fr/facts.json");
             const array = await data.json()
             console.log(array)
 
