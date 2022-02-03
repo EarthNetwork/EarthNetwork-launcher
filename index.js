@@ -220,7 +220,7 @@ async function createWindow() {
         win = null
     })
     win.once("ready-to-show", () => {
-        updater.close()
+        //updater.close()
     })
 }
 function createMenu() {
@@ -229,7 +229,7 @@ function createMenu() {
 
         // Extend default included application menu to continue support for quit keyboard shortcut
         let applicationSubMenu = {
-            label: 'RMTC Launcher',
+            label: 'EarthNetwork Launcher',
             submenu: [{
                 label: 'À propos',
                 selector: 'orderFrontStandardAboutPanel:'

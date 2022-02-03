@@ -22,8 +22,8 @@ class Updater {
 
 	create() {
 		this.win = new BrowserWindow({
-			width: 500,
-			height: 500,
+			width: 430,
+			height: 550,
 			movable: false,
 			resizable: false,
 			webPreferences: {
@@ -51,7 +51,7 @@ class Updater {
 			const rsx = await this.updater.checkForUpdates().catch((e) => `ERREUR: ${e.message || e}`);
 			if (typeof rsx === "string" && rsx.startsWith("ERREUR: ")) {
 				this.win.webContents.send("error", rsx.replace("ERREUR: ", ""));
-				return resolve(true);
+				resolve(true);
 			}
 
 			this.updater.on("update-not-available", () => {
@@ -94,7 +94,7 @@ class Updater {
 			const rsy = await this.updater.checkForUpdates().catch((e) => `ERREUR: ${e.message || e}`);
 			if (typeof rsy === "string" && rsy.startsWith("ERREUR: ")) {
 				this.win.webContents.send("error", "Update Error!");
-				return resolve(true);
+				resolve(true);
 			}
 		});
 	}
