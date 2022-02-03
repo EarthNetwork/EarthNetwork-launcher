@@ -19,10 +19,10 @@ jobs:
           node-version: 16
       - name: Install pnpm
         uses: pnpm/action-setup@master
-      - name: Install deps
-        run: pnpm install --frozen-lockfile
         with:
           version: latest
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
       - name: Build
         run: pnpm dist
         env:
