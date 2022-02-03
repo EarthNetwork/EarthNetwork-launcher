@@ -18,10 +18,9 @@ jobs:
         with:
           node-version: 16
       - name: Install pnpm
-        run: yarn global add pnpm@latest
-
-      - name: Installer les deps
-        run: pnpm install
+        uses: pnpm/action-setup@master
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
       - name: Build
         run: pnpm dist
         env:
