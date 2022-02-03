@@ -1,5 +1,4 @@
 name: Build
-
 on: push
 
 jobs:
@@ -18,11 +17,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16
+      - name: Install pnpm
+        run: yarn global add pnpm@latest
 
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
+      - name: Installer les deps
+        run: pnpm install
+      - name: Build
+        run: pnpm dist
         with:
-          github_token: ${{ secrets.github_token }}
+          GH_TOKEN: ${{ secrets.github_token }}
 
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building

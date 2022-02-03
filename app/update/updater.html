@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <!--JavaScript at end of body for optimized loading-->
+    <main>
+        <div class="preloader-wrapper big active center" height=100px width=100px>
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+        <style>
+             :root {
+                --light: white;
+                --dark: #18181b;
+                --special: #4285f4;
+                --gray: #99aab5;
+            }
+            
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            
+            html,
+            body,
+            main {
+                height: 100%;
+                width: 100%;
+            }
+            
+            progress {
+                height: 7px;
+                background-color: var(--gray);
+                appearance: none;
+                color: var(--special) !important;
+                border-radius: 10px;
+            }
+            
+            progress::-webkit-progress-bar {
+                height: 7px;
+                background-color: var(--gray);
+                border-radius: 10px;
+            }
+            
+            progress::-moz-progress-bar {
+                height: 7px;
+                -moz-appearance: none;
+                background-color: var(--special) !important;
+                border-radius: 10px;
+            }
+            
+            progress::-webkit-progress-value {
+                height: 7px;
+                -webkit-appearance: none;
+                background-color: var(--special) !important;
+                border-radius: 10px;
+            }
+            
+            main {
+                -webkit-app-region: drag;
+                font-family: "Roboto", sans-serif;
+                background-color: var(--dark);
+                color: var(--light);
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                -webkit-user-select: none;
+                user-select: none;
+            }
+            
+            main>* {
+                max-width: 80%;
+            }
+            
+            .special {
+                color: var(--special);
+            }
+            
+            .dull {
+                opacity: 0.6;
+            }
+            
+            .dull progress {
+                opacity: 1;
+            }
+            
+            .center {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
+        <h1 class="special"><b>EarthNetwork</b></h1>
+        <div id="fact">Récurrage des blocs</div>
+        <div id="author" style="color:grey">Envoyé par un inconnu</div>
+        <div>Version: <b id="currentVersion">0.0.0</b></div>
+
+        <p class="dull" id="status" style="margin-top: 0.4rem; font-size: 0.9rem">Verification des mises à jour...</p>
+    </main>
+    <script>
+        document.onload = fact();
+
+        async function fact() {
+            //const data = await fetch("./facts.json");
+            const data = ["Récurrage des blocs"];
+            const array = await data.json()
+            console.log(array)
+
+            const element = document.getElementById('fact');
+            const number = Math.floor(Math.random() * array.length);
+            element.innerHTML = JSON.stringify(array[number].fact);
+            element.innerHTML = element.innerHTML.replace(/[\[\]"]+/g, '');
+            const element2 = document.getElementById('author');
+            element2.innerHTML = "- " + JSON.stringify(array[number].author);
+            element2.innerHTML = element2.innerHTML.replace(/[\[\]"]+/g, '');
+        }
+    </script>
+    <script type="text/javascript" src="assets/js/materialize.min.js">
+    </script>
+</body>
+
+</html>

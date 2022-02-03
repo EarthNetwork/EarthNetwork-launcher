@@ -10,6 +10,8 @@ const isDev                         = require('./app/assets/js/isdev')
 const path                          = require('path')
 const semver                        = require('semver')
 const { pathToFileURL }             = require('url')
+const Updater                       = require("./app/update/window")
+const updater = new Updater();
 const redirectUriPrefix = 'https://login.microsoftonline.com/common/oauth2/nativeclient?'
 const clientID = '7c4b0e47-d80a-4d85-a258-d4800c872b25'
 
@@ -27,6 +29,7 @@ function initAutoUpdater(event, data) {
         // Defaults to true if application version contains prerelease components (e.g. 0.12.1-alpha.1)
         // autoUpdater.allowPrerelease = true
     }
+    
     
     if(isDev){
         autoUpdater.autoInstallOnAppQuit = false
@@ -175,8 +178,10 @@ app.allowRendererProcessReuse = true
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 
-function createWindow() {
-
+async function createWindow() {
+    await updater.create()
+    const proc = await updater.init()
+    if (!proc) await updater.close()
     win = new BrowserWindow({
         width: 980,
         minWidth: 980,
@@ -284,7 +289,7 @@ function getPlatformIcon(filename){
     let ext
     switch(process.platform) {
         case 'win32':
-            ext = 'ico'
+            ext = 'png'
             break
         case 'darwin':
         case 'linux':
