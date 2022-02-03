@@ -24,7 +24,7 @@ jobs:
         run: pnpm install
       - name: Build
         run: pnpm dist
-        with:
+        env:
           GH_TOKEN: ${{ secrets.github_token }}
 
           # If the commit is tagged with a version (e.g. "v1.0.0"),
